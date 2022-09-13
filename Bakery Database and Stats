@@ -1,0 +1,36 @@
+--Create a financial database for a typical week at a small bakery.
+
+CREATE TABLE Baked_Goodies (id INTEGER PRIMARY KEY, name TEXT, individual_sale_price INTEGER, cost_to_make_one_dozen INTEGER, quantity_made INTEGER, production_cost INTEGER, quantity_sold INTEGER, gross_profit INTEGER);
+
+INSERT INTO Baked_Goodies VALUES (1, "strawberry_cupcake", 5.00, 36.00, 60, 180.00, 45, 225.00);
+INSERT INTO Baked_Goodies VALUES (2, "fudge_brownie", 4.00, 24.00, 45, 90.00, 30, 120.00);
+INSERT INTO Baked_Goodies VALUES (3, "zuchinni_bread", 6.00, 40.00, 60, 200.00, 50, 300.00);
+INSERT INTO Baked_Goodies VALUES (4, "everything_bagel", 5.00, 36.00, 40, 120.00, 35, 175.00);
+INSERT INTO Baked_Goodies VALUES (5, "blueberry_muffin", 5.00, 36.00, 60, 180.00, 45, 225.00);
+INSERT INTO Baked_Goodies VALUES (6, "banana_nut_muffin", 5.00, 36.00, 60, 180.00, 45, 225.00);
+INSERT INTO Baked_Goodies VALUES (7, "chocolate_chip_cookie", 3.00, 12.00, 160, 160.00, 135, 405.00);
+INSERT INTO Baked_Goodies VALUES (8, "sugar_cookie", 3.00, 12.00, 160, 160.00, 135, 405.00);
+INSERT INTO Baked_Goodies VALUES (9, "peanut_butter_cookie", 3.00, 12.00, 160, 160.00, 135, 405.00);
+INSERT INTO Baked_Goodies VALUES (10, "strawberry_shortcake", 7.00, 60.00, 36, 180.00, 24, 168.00);
+INSERT INTO Baked_Goodies VALUES (11, "oreo_cake_pops", 3.75, 24.00, 72, 144.00, 60, 225.00);
+INSERT INTO Baked_Goodies VALUES (12, "berry_tartlet", 7.50, 45.00, 72, 270.00, 60, 450.00);
+INSERT INTO Baked_Goodies VALUES (13, "lemon_bars", 6.00, 40.00, 60, 200.00, 50, 300.00);
+INSERT INTO Baked_Goodies VALUES (14, "vanilla_cupcakes", 5.00, 36.00, 60, 180.00, 45, 225.00);
+INSERT INTO Baked_Goodies VALUES (15, "cranberry_white_chocolate_delights", 7.50, 45.00, 72, 270.00, 60, 450.00);
+
+--Display the database ordered by price.
+SELECT * FROM Baked_Goodies ORDER BY individual_sale_price asc;
+
+--What is the total number of baked goods that were made versus the total number that were actually sold?
+SELECT SUM(quantity_made) FROM baked_goodies;
+SELECT SUM (quantity_sold) FROM baked_goodies;
+
+--What is the number of baked goods that went to waste from not being sold?
+SELECT SUM(quantity_made)-SUM(quantity_sold) FROM baked_goodies;
+
+--How much money was spent making all goodies, and how much money was made selling them?
+SELECT SUM(production_cost) FROM baked_goodies;
+SELECT SUM(gross_profit) FROM Baked_Goodies;
+
+--What is the net profit after all production costs this week at the bakery?
+SELECT SUM(gross_profit)-SUM(production_cost) FROM baked_goodies;
