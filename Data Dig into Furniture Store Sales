@@ -119,16 +119,22 @@ INSERT INTO sales(transaction_date,product,price,payment_type,name,city,state,co
 INSERT INTO sales(transaction_date,product,price,payment_type,name,city,state,country,account_created,last_login,latitude,longitude) VALUES ('1/14/09 11:19','Chair',1200,'Visa','Jennifer','Jumeira','Dubayy','United Arab Emirates','1/14/09 10:44','1/14/09 21:26',25.2097222,55.2477778);
 INSERT INTO sales(transaction_date,product,price,payment_type,name,city,state,country,account_created,last_login,latitude,longitude) VALUES ('1/13/09 19:39','Chair',1200,'Visa','Jolene','Englewood','CO','United states','1/6/09 22:00','1/14/09 22:02',39.64778,-104.98722);
 
-SELECT * FROM sales;
-
+What is the lowest and highest cost product in the store, by type?
 SELECT product, MIN(price), MAX(price) FROM sales GROUP BY product;
 
+What is the average price of a piece of furniture from the store?
 SELECT AVG(price) FROM sales;
+
+What is the number of each payment type used? (Diners club card, Amex, Mastercard, Visa)
 SELECT payment_type, COUNT(payment_type) FROM sales GROUP BY payment_type;
 
+How much revenue did each product type bring in?
 SELECT product, SUM(price) AS total_revenue FROM sales GROUP BY PRODUCT;
-SELECT product, SUM(price) AS total_revenue FROM sales GROUP BY product HAVING total_revenue > 50000;
 
+Which product(s) brought in a total revenue of at least $50,000?
+SELECT product, SUM(price) AS total_revenue FROM sales GROUP BY product HAVING total_revenue >= 50000;
+
+How much revenue was brought in from each country, each state, and each city?
 SELECT country, SUM(price) AS total_revenue FROM sales GROUP BY country ORDER BY total_revenue desc;
 
 SELECT state, SUM(price) AS total_revenue FROM sales GROUP BY state ORDER BY total_revenue desc;
