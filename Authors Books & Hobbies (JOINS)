@@ -1,0 +1,64 @@
+/*TABLES*/
+CREATE TABLE authors (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, age INTEGER, birthplace TEXT, year_first_published INTEGER);
+
+INSERT INTO authors (name, age, birthplace, year_first_published) VALUES ("Kate_DiCamillo", 58, "Philadelphia_PA", 2000);
+INSERT INTO authors (name, age, birthplace, year_first_published) VALUES ("Jerry_Spinelli", 81, "Norristown_PA", 1982);
+INSERT INTO authors (name, age, birthplace, year_first_published) VALUES ("Sharon_M_Draper", 74, "Cleveland_OH", 1994);
+INSERT INTO authors (name, age, birthplace, year_first_published) VALUES ("Kelly_Barnhill", 48, "Minneapolis_MN", 2011);
+
+
+CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, author_id INTEGER, year_published INTEGER);
+
+INSERT INTO books (name, author_id, year_published) VALUES ("The_Miraculous_Journey_of_Edward_Tulane", 1, 2006);
+INSERT INTO books (name, author_id, year_published) VALUES ("Because_of_Winn-Dixie", 1, 2000);
+INSERT INTO books (name, author_id, year_published) VALUES ("The_Tale_of_Despereaux", 1, 2003);
+INSERT INTO books (name, author_id, year_published) VALUES ("Maniac_Magee", 2, 1990);
+INSERT INTO books (name, author_id, year_published) VALUES ("Space_Station_Seventh_Grade", 2, 1982);
+INSERT INTO books (name, author_id, year_published) VALUES ("Crash", 2, 1996);
+INSERT INTO books (name, author_id, year_published) VALUES ("Stargirl", 2, 2000);
+INSERT INTO books (name, author_id, year_published) VALUES ("Ziggy_and_the_Black_Dinosaurs", 3, 1994);
+INSERT INTO books (name, author_id, year_published) VALUES ("Blended", 3, 2018);
+INSERT INTO books (name, author_id, year_published) VALUES ("Out_of_My_Mind", 3, 2010);
+INSERT INTO books (name, author_id, year_published) VALUES ("The_Mostly_True_Story_of_Jack", 4, 2011);
+INSERT INTO books (name, author_id, year_published) VALUES ("The_Girl_Who_Drank_the_Moon", 4, 2016);
+
+
+CREATE TABLE hobbies (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, author_id INTEGER);
+
+INSERT INTO hobbies (name, author_id) VALUES ("Eating", 1);
+INSERT INTO hobbies (name, author_id) VALUES ("Writing", 1);
+INSERT INTO hobbies (name, author_id) VALUES ("Tennis", 2);
+INSERT INTO hobbies (name, author_id) VALUES ("Traveling", 2);
+INSERT INTO hobbies (name, author_id) VALUES ("Listening_to_Country_Music", 2);
+INSERT INTO hobbies (name, author_id) VALUES ("Going_to_the_Beach", 3);
+INSERT INTO hobbies (name, author_id) VALUES ("Reading", 3);
+INSERT INTO hobbies (name, author_id) VALUES ("Photography", 4);
+INSERT INTO hobbies (name, author_id) VALUES ("Learning", 4);
+INSERT INTO hobbies (name, author_id) VALUES ("Traveling", 4);
+
+
+1. Show a human readable list of all the authors, the books they've written, and the year those books were published, starting from the earliest year.
+
+SELECT authors.name, books.name as "book_name", books.year_published FROM authors
+    JOIN books
+    ON authors.id = books.author_id
+ORDER BY books.year_published asc;
+
+
+2. Show a list of each author's first published book, the year it was published, along with their hobbies for a student project.
+
+SELECT authors.name, authors.year_first_published, books.name as "first_published_book", hobbies.name as "hobby" FROM authors
+    JOIN books
+    ON authors.id = books.author_id
+    JOIN books first
+    ON authors.year_first_published = books.year_published
+    JOIN hobbies
+    ON authors.id = hobbies.author_id
+GROUP BY authors.name;
+
+
+3. Show each author's name next to their place of birth, their age, and their hobbies.
+
+SELECT authors.name, authors.birthplace, authors.age, hobbies.name as "hobby" FROM authors
+    JOIN hobbies
+    ON authors.id = hobbies.author_id;
