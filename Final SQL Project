@@ -88,7 +88,7 @@ ORDER BY media_type;
 
 #13.
 --Show the total sales made by each sales agent.
-SELECT e.employeeid, e.lastname AS sales_rep_last_name, e.firstname AS sales_rep_first_name, SUM(i.total) AS total_sales FROM employees e 
+SELECT e.employeeid, e.lastname AS sales_rep_last_name, e.firstname AS sales_rep_first_name, ROUND(SUM(i.total), 2) AS total_sales FROM employees e 
 JOIN customers c ON e.employeeid = c.supportrepid 
 JOIN invoices i ON c.customerid = i.customerid
 GROUP BY employeeid ORDER BY total_sales desc;
@@ -96,7 +96,7 @@ GROUP BY employeeid ORDER BY total_sales desc;
 
 #14.
 --Which sales agent made the most dollars in sales in 2009?
-SELECT e.employeeid, e.lastname AS sales_rep_last_name, e.firstname AS sales_rep_first_name, SUM(i.total) AS total_sales FROM employees e 
+SELECT e.employeeid, e.lastname AS sales_rep_last_name, e.firstname AS sales_rep_first_name, ROUND(SUM(i.total), 2) AS total_sales FROM employees e 
 JOIN customers c ON e.employeeid = c.supportrepid 
 JOIN invoices i ON c.customerid = i.customerid
 WHERE invoicedate LIKE '2009%'
