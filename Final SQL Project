@@ -5,7 +5,7 @@
 #1. 
 --Show Customers (their full names, customer ID, and country) who are not in the US.
 SELECT firstname, lastname, customerid, country FROM customers
-WHERE country != 'USA';
+WHERE country != 'USA'; 
 
 
 #2.
