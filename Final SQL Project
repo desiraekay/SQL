@@ -1,4 +1,5 @@
-#Here, I have answered some example questions working with a dataset called chinook, which represents a digital media store. The database includes tables for artists, albums, media tracks, media types, genres, playlists, invoices, customers and employees.
+#Here, I have answered some example questions (#1-14) working with a dataset called chinook, which represents a digital media store. The database includes tables for artists, albums, media tracks, media types, genres, playlists, invoices, customers and employees.
+#After answering the example questions (#1-14) I then came up with a few more questions on my own (#15-20).
 
 
 #1. 
@@ -101,4 +102,57 @@ JOIN customers c ON e.employeeid = c.supportrepid
 JOIN invoices i ON c.customerid = i.customerid
 WHERE invoicedate LIKE '2009%'
 GROUP BY employeeid ORDER BY total_sales desc
+LIMIT 1;
+
+
+#15.
+--Find the top 5 selling artists.
+SELECT ar.name AS artist, COUNT(invoiceid) AS times_purchased FROM invoice_items i
+JOIN tracks t ON i.trackid = t.trackid
+JOIN albums al ON t.albumid = al.albumid
+JOIN artists ar ON al.artistid = ar.artistid
+GROUP BY artist ORDER BY COUNT(invoiceid) DESC
+LIMIT 5;
+
+
+#16.
+--Find the top 5 most purchased tracks and their media type.
+SELECT t.name AS track_name, m.name AS media_type, COUNT(invoiceid) AS times_purchased FROM invoice_items i
+JOIN tracks t ON i.trackid = t.trackid
+JOIN media_types m ON t.mediatypeid = m.mediatypeid
+GROUP BY track_name ORDER BY COUNT(invoiceid) DESC
+LIMIT 5;
+
+
+#17.
+--Which playlist is the most popular?
+SELECT p.playlistid, p.name AS playlist,COUNT(invoiceid) AS times_purchased FROM invoice_items i
+JOIN tracks t ON i.trackid = t.trackid
+JOIN playlist_track pt ON t.trackid = pt.trackid
+JOIN playlists p ON pt.playlistid = p.playlistid
+GROUP BY p.playlistid ORDER BY times_purchased DESC
+LIMIT 1;
+
+
+#18.
+--What are the top 3 countries with the most sales in the year 2013?
+SELECT ROUND(SUM(total), 2) AS total_sales, billingcountry AS country FROM invoices
+WHERE invoicedate LIKE '2013%'
+GROUP BY billingcountry ORDER BY total_sales desc
+LIMIT 3;
+
+
+#19.
+--What is the full name and address of the most frequent buyer?
+SELECT i.customerid, COUNT(i.invoiceid) AS orders_placed, c.firstname, c.lastname, c.address, c.city, c.state, c.postalcode, c.country FROM customers c
+JOIN invoices i ON c.customerid = i.customerid
+GROUP BY i.customerid ORDER BY orders_placed DESC 
+LIMIT 1;
+
+
+#20.
+--What is the full name of the buyer who spent the most money on their purchases overall? How much have they spent?
+SELECT i.customerid, c.firstname, c.lastname, ROUND(SUM(i.total), 2) AS amount_spent FROM customers c
+JOIN invoices i ON c.customerid = i.customerid
+GROUP BY i.customerid ORDER BY amount_spent DESC
 LIMIT 1;
