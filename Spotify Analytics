@@ -1,6 +1,7 @@
 # For this project, I downloaded Spotify data from Kaggle.
 # Then I created a table to insert Spotify data into.
 # Finally, I performed analytics on the data using SQL. 
+# In the final question, I used SQLite Studio to write my own CTE with the Spotify data table.
 
 #Creating the table: 
 CREATE TABLE BIT_DB.Spotifydata (
@@ -51,3 +52,13 @@ LIMIT 10;
 SELECT artist_name, track_name, duration_ms FROM Spotifydata
 ORDER BY duration_ms desc
 LIMIT 1;
+
+#Calculate the average popularity for the artists in the Spotify data table. Then, for every artist with an average popularity of 90 or above, show their name, their average popularity, and label them as a “Top Star”.
+WITH popularity_average_CTE AS (
+SELECT s.artist_name, AVG(s.popularity) AS 'average_popularity' FROM Spotifydata s
+GROUP BY s.artist_name
+)
+
+SELECT artist_name, average_popularity, 'Top Star' AS tag
+FROM popularity_average_CTE 
+WHERE average_popularity >= 90;
